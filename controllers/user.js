@@ -3,19 +3,11 @@ const jwt = require('jwt-simple');
 
 exports.postLoginUser = (req, res ,next) =>{
     user.findOne({ email: req.body.email }, function(err, user) {
-      if (!user) return res.send(401, 'User does not exist');
-      else
-     res.json({
-         message: "username"
-     })
+      if (!user) return res.json(401, 'User does not exist');
       user.comparePassword(req.body.password, function(err, isMatch) {
-        if (!isMatch) return res.send(401, 'Invalid email and/or password');
-        else
-        res.json({
-            message: "password"
-        });
+        if (!isMatch) return res.json(401, 'Invalid email and/or password');
         var token = createJwtToken(user);
-        res.send({ token: token });
+        res.json({ token: token });
       });
     });
   };
