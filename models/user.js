@@ -8,8 +8,6 @@ const userSchema = new mongoose.Schema({
     passwordExpiry: {type: Date},
     
   });
-
-
   userSchema.pre('save', function(next) {
     const user = this;
     if (!user.isModified('password')) return next();

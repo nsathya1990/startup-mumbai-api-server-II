@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const chalk = require('chalk');
 const errorHandler = require('errorhandler');
-const lusca = require('lusca');
 const dotenv = require('dotenv');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -20,6 +19,7 @@ dotenv.load({ path: '.env' });
  * Controllers (route handlers).
  */
 const apiController = require('./controllers/api');
+const userController = require('./controllers/user');
 
 /**
  * Create Express server.
@@ -50,15 +50,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  if (req.path === '/api/upload') {
-    next();
-  } else {
-    lusca.csrf()(req, res, next);
-  }
-});
-app.use(lusca.xframe('SAMEORIGIN'));
-app.use(lusca.xssProtection(true));
+// app.use((req, res, next) => {
+//   if (req.path === '/api/upload') {
+//     next();
+//   } else {
+//     lusca.csrf()(req, res, next);
+//   }
+// });
+
 app.disable('x-powered-by');
 app.use((req, res, next) => {
   res.locals.user = req.user;
@@ -70,6 +69,7 @@ app.use((req, res, next) => {
  * API examples routes.
  */
 app.get('/api', apiController.getApi);
+app.post('/api/login', userController.postLoginUser);
 
 
 /**
