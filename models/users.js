@@ -5,15 +5,8 @@ const userSchema = new mongoose.Schema({
     name: { type: String, trim: true},
     email: { type: String, unique: true, lowercase: true, trim: true,required: 'Email address is required',},
     password:  { type: String },
-    passwordExpiry: {type: String},
-    facebook: {
-      id: String,
-      email: String
-    },
-    google: {
-      id: String,
-      email: String
-    }
+    passwordExpiry: {type: Date},
+    
   });
 
 
