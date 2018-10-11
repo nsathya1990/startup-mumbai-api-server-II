@@ -1,0 +1,49 @@
+{
+  "name": "startup-mumbai-api-server",
+  "version": "1.0.0",
+  "description": "startupmumbai.org apis",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "nyc mocha --timeout=10000 --exit",
+    "lint": "eslint \"**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sobingt/startup-mumbai-api-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sobingt/startup-mumbai-api-server/issues"
+  },
+  "homepage": "https://github.com/sobingt/startup-mumbai-api-server#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "dotenv": "^6.1.0",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.4",
+    "express-status-monitor": "^1.2.3",
+    "lusca": "^1.6.1",
+    "mongoose": "^5.3.2",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
+    "sinon": "^6.3.3",
+    "sinon-mongoose": "^2.2.1",
+    "supertest": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=8.11.3",
+    "npm": ">=5.6.0"
+  }
+}
