@@ -5,8 +5,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const chalk = require('chalk');
-const errorHandler = require('errorhandler');
-const lusca = require('lusca');
 const dotenv = require('dotenv');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -20,6 +18,7 @@ dotenv.load({ path: '.env' });
  * Controllers (route handlers).
  */
 const apiController = require('./controllers/api');
+const userController = require('./controllers/user');
 
 /**
  * Create Express server.
@@ -50,40 +49,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  if (req.path === '/api/upload') {
-    next();
-  } else {
-    lusca.csrf()(req, res, next);
-  }
-});
-app.use(lusca.xframe('SAMEORIGIN'));
-app.use(lusca.xssProtection(true));
-app.disable('x-powered-by');
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
 
 
 /**
  * API examples routes.
  */
 app.get('/api', apiController.getApi);
+app.post('/signup', userController.userSignUp);
 
-
-/**
- * Error Handler.
- */
-if (process.env.NODE_ENV === 'development') {
-  // only use in development
-  app.use(errorHandler());
-} else {
-  app.use((err, req, res, next) => {
-    console.error(err);
-    res.status(500).send('Server Error');
-  });
-}
 
 /**
  * Start Express server.
@@ -92,5 +65,6 @@ app.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
   console.log('  Press CTRL-C to stop\n');
 });
+
 
 module.exports = app;

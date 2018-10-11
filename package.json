@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sobingt/startup-mumbai-api-server#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "dotenv": "^6.1.0",
