@@ -32,10 +32,10 @@ const app = express();
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
-mongoose.connect(MONGO_URL, {
+mongoose.connect(process.env.MONGO_URL, {
   auth: {
-    user: MONGO_DB_USER,
-    password: MONGO_DB_PASSWORD
+    user: process.env.MONGO_DB_USER,
+    password: process.env.MONGO_DB_PASSWORD
   }
 })
 mongoose.connection.on('error', (err) => {
