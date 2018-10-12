@@ -32,7 +32,12 @@ const app = express();
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
-mongoose.connect(encodeURI(process.env.MONGODB_URI));
+mongoose.connect(MONGO_URL, {
+  auth: {
+    user: MONGO_DB_USER,
+    password: MONGO_DB_PASSWORD
+  }
+})
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
