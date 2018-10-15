@@ -8,6 +8,8 @@ const chalk = require('chalk');
 const dotenv = require('dotenv');
 const path = require('path');
 const mongoose = require('mongoose');
+const flash = require('express-flash');
+const cors = require('cors');
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -24,6 +26,7 @@ const userController = require('./controllers/user');
  * Create Express server.
  */
 const app = express();
+app.use(flash());
 
 /**
  * Connect to MongoDB.
@@ -48,14 +51,15 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(cors());
 
 
 /**
  * API examples routes.
  */
 app.get('/api', apiController.getApi);
-app.post('/signup', userController.userSignUp);
+app.post('/auth/signup', userController.userSignUp);
+
 
 
 /**
