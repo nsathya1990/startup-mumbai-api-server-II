@@ -11,6 +11,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const cors = require('cors');
+const async = require('async');
 
 dotenv.load({ path: '.env' });
 
@@ -99,6 +100,7 @@ app.get('/auth/google/callback',
   function (req, res) {
     res.redirect('/');
   });
+ 
 
 
 /**

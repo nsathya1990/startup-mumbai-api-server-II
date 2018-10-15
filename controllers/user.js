@@ -27,7 +27,9 @@ exports.postLoginUser = (req, res ,next) =>{
     });
   };
    
- 
+ exports.postChangePassword = (req, res ,next) =>{
+   
+ }
 
 
   
