@@ -10,7 +10,6 @@ const path = require('path');
 const mongoose = require('mongoose');
 const flash = require('express-flash');
 const cors = require('cors');
-
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
@@ -59,7 +58,6 @@ app.use(cors());
  */
 app.get('/api', apiController.getApi);
 app.post('/auth/signup', userController.userSignUp);
-
 
 
 /**
