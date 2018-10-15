@@ -15,7 +15,9 @@ const async = require('async');
 
 dotenv.load({ path: '.env' });
 
-const passportConfig = require('./config/authentication');
+const passportConfig = require('./config/passport');
+
+
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
@@ -25,6 +27,7 @@ const passportConfig = require('./config/authentication');
  */
 const apiController = require('./controllers/api');
 const userController = require('./controllers/user');
+const authController = require('./controllers/authentication');
 
 /**
  * Create Express server.
@@ -100,7 +103,7 @@ app.get('/auth/google/callback',
   function (req, res) {
     res.redirect('/');
   });
- 
+ app.get('api/me', authController.ensureAuthenticated, userController.getMe);
 
 
 /**
