@@ -7,4 +7,3 @@ exports.getApi = (req, res) => {
     title: 'API Examples'
   });
 };
-

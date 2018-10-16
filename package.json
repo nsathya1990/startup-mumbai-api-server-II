@@ -19,15 +19,23 @@
   },
   "homepage": "https://github.com/sobingt/startup-mumbai-api-server#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
+    "cors": "^2.8.4",
     "dotenv": "^6.1.0",
     "errorhandler": "^1.5.0",
     "express": "^4.16.4",
     "express-status-monitor": "^1.2.3",
+    "jwt-simple": "^0.5.5",
     "lusca": "^1.6.1",
+    "moment": "^2.22.2",
     "mongoose": "^5.3.2",
     "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth20": "^1.0.0",
     "path": "^0.12.7"
   },
   "devDependencies": {
