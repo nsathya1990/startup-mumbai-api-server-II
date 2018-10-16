@@ -1,6 +1,7 @@
 /**
  * Module dependencies.
  */
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
@@ -103,7 +104,8 @@ app.get('/auth/google/callback',
   function (req, res) {
     res.redirect('/');
   });
- app.get('api/me', authController.ensureAuthenticated, userController.getMe);
+app.post('/api/auth/changePassword', authController.ensureAuthenticated, userController.postChangePassword);
+app.get('/api/me', authController.ensureAuthenticated, userController.getMe);
 
 
 /**
