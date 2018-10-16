@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String },
   passwordExpiry: { type: Date },
-
 });
 
 
