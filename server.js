@@ -12,11 +12,10 @@ const mongoose = require('mongoose');
 const flash = require('express-flash');
 const cors = require('cors');
 const passport = require('passport');
-const cors = require('cors');
 
 dotenv.load({ path: '.env' });
 
-const passportConfig = require('./config/passport');
+//const passportConfig = require('./config/passport');
 
 
 /**
@@ -42,7 +41,7 @@ app.use(flash());
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect(process.env.MONGODB_URI, {
   auth: {
     user: process.env.MONGO_DB_USER,
     password: process.env.MONGO_DB_PASSWORD
@@ -77,7 +76,8 @@ app.use(cors());
  * API examples routes.
  */
 app.get('/api', apiController.getApi);
-app.post('/signup', userController.userSignUp);
+app.post('/auth/signup', userController.userSignUp);
+app.post('/auth/forgotpassword', userController.userForgotPassword);
 app.post('/api/login', userController.postLoginUser);
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',
@@ -94,7 +94,6 @@ app.get('/auth/google/callback',
   });
 app.post('/api/auth/changePassword', authController.ensureAuthenticated, userController.postChangePassword);
 app.get('/api/me', authController.ensureAuthenticated, userController.getMe);
-
 
 /**
  * Start Express server.

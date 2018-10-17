@@ -1,7 +1,10 @@
-const User = require('../models/users');
-const nodemailer = require('nodemailer');
+const User = require('../models/user');
 const jwt = require('jwt-simple');
 const moment = require('moment');
+const crypto = require('crypto-browserify');
+
+const { mailgunMailer } =  require('../controllers/mailer');
+
 
 exports.userSignUp = (req, res, next) => {
     if(req.body.name && req.body.email && req.body.password ) {
@@ -112,3 +115,28 @@ function createJwtToken(user) {
   return jwt.encode(payload, process.env.TOKEN_SECRET);
 }
 
+exports.userForgotPassword = (req, res, next) => {
+
+        crypto.randomBytes(20, function (err, buf) {
+        token = buf.toString('hex');
+        })
+    User.findOne({ email: req.body.email }, function (err, user) {
+        if (!user) return next({
+                message: 'No account with that email address exists.'
+            });
+        user.resetPasswordToken = token;
+        user.passwordExpiry = Date.now() + 3600000; // 1 hour
+        
+        mailgunMailer(user);
+        user.save(function (err) {
+            if (err) return next({
+                message: "Something went wrong",
+                error: err
+            });
+            res.json({
+                message: "Email send",
+                status: 200
+            });
+        });
+    });
+};
