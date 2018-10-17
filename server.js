@@ -78,6 +78,7 @@ app.use(cors());
 app.get('/api', apiController.getApi);
 app.post('/auth/signup', userController.userSignUp);
 app.post('/auth/forgotpassword', userController.userForgotPassword);
+app.post('/auth/resetpassword/:token', userController.userResetPassword);
 app.post('/api/login', userController.postLoginUser);
 app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get('/auth/facebook/callback',

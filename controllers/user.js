@@ -3,7 +3,7 @@ const jwt = require('jwt-simple');
 const moment = require('moment');
 const crypto = require('crypto-browserify');
 
-const { mailgunMailer } =  require('../controllers/mailer');
+const { mailForgotPassword, mailResetPassword } =  require('../controllers/mailer');
 
 
 exports.userSignUp = (req, res, next) => {
@@ -127,7 +127,7 @@ exports.userForgotPassword = (req, res, next) => {
         user.resetPasswordToken = token;
         user.passwordExpiry = Date.now() + 3600000; // 1 hour
         
-        mailgunMailer(user);
+        mailForgotPassword(user);
         user.save(function (err) {
             if (err) return next({
                 message: "Something went wrong",
@@ -139,4 +139,29 @@ exports.userForgotPassword = (req, res, next) => {
             });
         });
     });
+};
+
+exports.userResetPassword = (req, res, next) => {
+  User.findOne({ resetPasswordToken: req.params.token, passwordExpiry: { $gt: Date.now() }}, function (err, user) {
+    if (!user) return next({
+      message: 'Password reset token is invalid or has expired.'
+    });
+    
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    mailResetPassword(user);
+
+    user.save(function (err) {
+      if (err) return next({
+        message: "Something went wrong",
+        error: err
+      });
+      res.json({
+        message: "Success! Your password has been changed.",
+        status: 200
+      });
+    });
+  });
 };
