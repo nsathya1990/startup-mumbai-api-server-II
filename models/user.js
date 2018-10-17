@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     type: String, unique: true, lowercase: true, trim: true, required: 'Email address is required'
   },
   password: { type: String },
-  passwordExpiry: { type: Date },
+  resetPasswordToken: String,
+  passwordExpiry: { type: Date }
 });
 
 
