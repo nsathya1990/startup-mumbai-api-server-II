@@ -8,6 +8,16 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String },
   passwordExpiry: { type: Date },
+  entreper: {
+    status: {type: String, default: 'pending'}, //complete, pending
+  },
+  vendor: {
+    status: {type: String, default: 'pending'}, //complete, pending
+  },
+  student : {
+    status: {type: String, default: 'pending'}, //complete, pending
+  },
+  profileType:[String] // [student], [vendor, investor]
 });
 
 

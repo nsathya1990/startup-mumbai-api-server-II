@@ -13,6 +13,7 @@ exports.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
           status: 400,
           message: 'Access token has expired'
         });
+        
       } else {
         req.user = decoded.user;
         return next();

@@ -45,9 +45,10 @@ exports.postLoginUser = (req, res, next) => {
   });
 };
 
-exports.postChangePassword = (req, res, next) => {
+exports.postChangePassword = (req, res) => {
   console.log(req.user)
   User.findOne({ _id: req.user.id }).select('password').exec(function (err, user) {
+    console.log("Inside mongoose");
     if (err) {
       throw err
     }
@@ -74,12 +75,13 @@ exports.postChangePassword = (req, res, next) => {
           message:'password incorrect'
         })
       }
-    })
+    }
+  )
   })
 
 }
 
-exports.getMe = (req, res, next) => {
+exports.getUser = (req, res, next) => {
   User.findOne({ _id: req.user.id }).select('-_id').exec(function (err, user) {
     if (!user) return res.json({
       status: 404,
@@ -88,6 +90,52 @@ exports.getMe = (req, res, next) => {
   })
 };
 
+
+exports.postStatus = (req, res) => {
+  console.log("inside postStatus()");
+  User.findOne({ _id: req.user.id }).select('status').exec(function (err, user){
+    if (err) {
+      console.log("inside err()");
+      throw err
+    }
+    if(user){
+      console.log("inside user()");
+      if(typeof user.profileType !== 'undefined')
+      {
+        var isComplete = false;
+        user.profileType.map(function(profile){
+          if(typeof user[profile] != 'undefined' && user[profile].status == 'complete')
+          {
+            isComplete = true;
+          } 
+        })
+        if(isComplete)
+        {
+          console.log("inside isComplete()");
+          res.json({
+            status:200,
+            message:'Status Complete',
+            data: user.profileType
+          })
+        }
+        else{
+          console.log("inside isComplete else()");
+          res.json({
+            status:404,
+            message:'incomplete status'
+          })
+        }
+      }
+    }
+    else{
+      console.log("inside last else()");
+      res.json({
+        status:404,
+        message:'user not there'
+      })
+    }
+  })
+}
 
 function createJwtToken(user) {
   var payload = {
