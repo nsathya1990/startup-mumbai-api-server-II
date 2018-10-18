@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
      required: 'Email address is required'
   },
   password: { type: String },
+  resetPasswordToken: String,
   passwordExpiry: { type: Date },
   entrepreneur: {
     name: String,
@@ -33,6 +34,7 @@ const userSchema = new mongoose.Schema({
     status: {type: String, default: 'pending'}, //complete, pending
   },
   profileType: [String] // [student], [vendor, investor]
+
 });
 
 
