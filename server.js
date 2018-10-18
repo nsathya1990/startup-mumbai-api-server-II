@@ -47,6 +47,7 @@ mongoose.connect(process.env.MONGODB_URI, {
     password: process.env.MONGO_DB_PASSWORD
   }
 })
+// mongoose.connect('mongodb://localhost:27017/tvdb');
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -93,8 +94,12 @@ app.get('/auth/google/callback',
   function (req, res) {
     res.redirect('/');
   });
+
+
 app.post('/api/auth/changePassword', authController.ensureAuthenticated, userController.postChangePassword);
-app.get('/api/me', authController.ensureAuthenticated, userController.getMe);
+app.get('/api/user', authController.ensureAuthenticated, userController.getUser);
+
+app.get('/api/profile/status',authController.ensureAuthenticated,userController.postStatus)
 
 /**
  * Start Express server.

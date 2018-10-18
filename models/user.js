@@ -4,11 +4,37 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   name: { type: String, trim: true },
   email: {
-    type: String, unique: true, lowercase: true, trim: true, required: 'Email address is required'
+    type: String,
+     unique: true, 
+     lowercase: true, 
+     trim: true, 
+     required: 'Email address is required'
   },
   password: { type: String },
   resetPasswordToken: String,
-  passwordExpiry: { type: Date }
+  passwordExpiry: { type: Date },
+  entrepreneur: {
+    name: String,
+    description: String,
+    status: {type: String, default: 'pending'}, //complete, pending
+  },
+  vendor: {
+    name: String,
+    description: String,
+    status: {type: String, default: 'pending'}, //complete, pending
+  },
+  student : {
+    name: String,
+    description: String,
+    status: {type: String, default: 'pending'}, //complete, pending
+  },
+  investor : {
+    name: String,
+    description: String,
+    status: {type: String, default: 'pending'}, //complete, pending
+  },
+  profileType: [String] // [student], [vendor, investor]
+
 });
 
 
